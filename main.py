@@ -1,0 +1,4 @@
+print("""                  INVENTORY MANAGEMENT SYSTEM
+
+
+""")
