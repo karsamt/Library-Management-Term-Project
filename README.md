@@ -1,0 +1,1 @@
+hocam daha öğrenme aşamasındayız diğer hafta baya bir ilerletme kaydetmiş olacağız.
