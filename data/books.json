@@ -1,1 +1,38 @@
-[]
+[
+    {
+        "isbn":"978-0451524935",
+        "title":"1984",
+        "authors":["George Orwell"],
+        "year":1949,
+        "genre":"Dystopian",
+        "copies":34,
+        "copies_available":31
+    },
+    {
+        "isbn":"978-9750719387",
+        "title":"The Trial",
+        "authors":["Franz Kafka"],
+        "year":1925,
+        "genre":"Modern Classic",
+        "copies":10,
+        "copies_available":9
+    },
+    {
+        "isbn":"978-0679734529",
+        "title":"Notes From Underground",
+        "authors":["Fyodor Dostoyevski"],
+        "year":1864,
+        "genre":" Philosophical Fiction",
+        "copies":12,
+        "copies_available":8
+    },
+    {
+        "isbn":"978-0743477123",
+        "title":"Hamlet",
+        "authors":["William Shakespeare"],
+        "year":1603,
+        "genre":"Tragedy",
+        "copies":44,
+        "copies_available":44
+    }
+]
