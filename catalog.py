@@ -96,5 +96,7 @@ def update_book(book_list:list, isbn:str, update_data:dict):
             if hasattr(book_to_be_updated, attribute):
                 setattr(book_to_be_updated, attribute, value)
         return book_to_be_updated.to_dict()
+    elif book_to_be_updated is None:
+        print("                                   ---Book Not Found---")
            
             
