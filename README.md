@@ -1,34 +1,34 @@
-CSE101 Dönem Ödevi - Kütüphane Yönetim Sistemi
- Bu proje kütüphane işlerini kolaylaştırmak için Python ile yazıldı. Proje temel olarak kitapları, üyeleri ve kitap alıp-verme olaylarını takip ediyor.
-
-Nasıl Çalıştırılır?
-Bilgisayarda Python varsa direkt main.py dosyasını çalıştırmanız yeterli. Veriler için data/ klasörü lazım ama kodda otomatik oluşturma kısmı var, yoksa da kendisi açıyor.
-
-Dosyalar Ne İşe Yarıyor? 
-
-main.py: Programın giriş kapısı, bütün menüler ve ekranlar burada.
-
-catalog.py: Kitap ekleme, silme, arama ve filtreleme işlerine bakıyor.
-
-patron.py: Üyelerin kayıt olması, login işlemleri ve borç takibi burada.
-
-circulation.py: Kitap ödünç alma, iade etme ve gecikme cezası hesaplama mantığı burada dönüyor.
+CSE101 Term Project - Library Management System 
+This project was written in Python to simplify library tasks. The project primarily tracks books, members, and book borrowing/returning events.
 
 
-storage.py: Verilerin JSON dosyalarına düzgünce kaydedilmesi ve yedeklenmesini sağlıyor.
+How to Run It? If Python is installed on your computer, simply run the main.py file. You will need the data/ folder for the data, but the code has an automatic creation feature; if the folder doesn't exist, it will create it itself.
 
 
-reports.py: Kimin kitabı gecikmiş, kimin ne kadar borcu var gibi raporları çıkarıyor.
+What Do the Files Do?
 
-Bazı Kurallar ve Limitler 
+main.py: The program's entry point; all menus and screens are here.
 
-Bir üye aynı anda en fazla 5 kitap alabiliyor, sınırlandırdım.
+catalog.py: Handles adding, deleting, searching, and filtering books.
 
-Kitap iade tarihi geçerse sistem otomatik olarak günlük 2.0 TL ceza kesiyor.
+patron.py: Member registration, login processes, and debt tracking are handled here.
 
-Kitap ararken hem isme hem de yazara göre arama yapabiliyorsunuz.
-Ek olarak yıl ve janraya göre filtreleyebiliyoruz.
+circulation.py: The logic for borrowing books, returning them, and calculating late fees is implemented here.
 
-Örnek Akış 
+storage.py: Ensures data is properly saved to JSON files and backed up.
 
-Önce kütüphaneci olarak girip kitap ekliyoruz, sonra patron (üye) menüsünden kayıt olup o kitabı ödünç alıyoruz. Sistem her şeyi data/ içindeki json dosyalarına kaydediyor.
+reports.py: Generates reports such as who has overdue books and how much each member owes.
+
+
+Some Rules and Limits
+
+I limited members to borrowing a maximum of 5 books at a time.
+
+If the book return date passes, the system automatically deducts a daily fine of 2.0 TL.
+
+When searching for books, you can search by both title and author. Additionally, we can filter by year and genre.
+
+
+Example Flow
+
+First, we log in as the librarian and add books, then we register from the patron (member) menu and borrow that book. The system saves everything to the JSON files in the data/ directory.
