@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "loan_id": "1",
+        "isbn": "978-0679734529",
+        "library_id": "20240702016",
+        "due_date": "2026-01-12",
+        "status": "active"
+    },
+    {
+        "loan_id": "2",
+        "isbn": "978-0743477123",
+        "library_id": "20240702016",
+        "due_date": "2026-01-12",
+        "status": "returned"
+    }
+]

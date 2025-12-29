@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "library_id": "20240702016",
+        "name": "Samet Kar",
+        "email": "fahrisamet32@gmail.com",
+        "password": "ege_aral_bayram",
+        "contact_info": "",
+        "borrowed_count": 1,
+        "fines": 0.0,
+        "limit": 5
+    }
+]

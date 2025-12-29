@@ -1,102 +1,75 @@
 import json
+
 class Book:
-    
-    def __init__(self, isbn, title, authors, year, genre, copies, copies_available):
-        self.isbn=isbn
-        self.title=title
-        self.authors=authors
-        self.year=year
-        self.genre=genre
-        self.copies=copies
-        self.copies_available=copies_available
+    def __init__(self, isbn, title, authors, year, genre, copies, copies_available, active=True):
+        self.isbn = isbn
+        self.title = title
+        self.authors = authors
+        self.year = int(year)
+        self.genre = genre
+        self.copies = int(copies)
+        self.copies_available = int(copies_available)
+        self.active = active 
 
     def to_dict(self):
-        return {"isbn":self.isbn,
-                "title":self.title,
-                "authors":self.authors,
-                "year":self.year,
-                "genre":self.genre,
-                "copies":self.copies,
-                "copies_available":self.copies_available
-        }
-    
-    def __repr__(self):
-        return f"Title:{self.title} | Authors: {', '.join(self.authors)}"
-    
-def save_books(path, book_list):
-    dict_list=[book.to_dict() for book in book_list]
-    with open(path, "w", encoding="utf-8") as file:
-        json.dump(dict_list, file, indent=4)
+        return self.__dict__
 
-def load_books(path):
+    def __repr__(self):
+        return f"Title: {self.title} | Available: {self.copies_available}/{self.copies}"
+
+def load_books(path: str) -> list:
     try:
         with open(path, "r", encoding="utf-8") as file:
-            dict_list=json.load(file)
-    except FileNotFoundError:
-        dict_list=[]
-    
-    book_list=[]
-    for book_dict in dict_list:
-        book=Book(**book_dict)
-        book_list.append(book)
-    
-    return book_list
+            return [Book(**b) for b in json.load(file)]
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
-def add_book(book_list:list, book_data:dict):
-    new_book=Book(**book_data)
-    book_list.append(new_book)
-    
+def save_books(path: str, books: list) -> None:
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump([b.to_dict() for b in books], file, indent=4)
+
+def add_book(books: list, book_data: dict) -> dict:
+    new_book = Book(**book_data)
+    books.append(new_book)
     return new_book.to_dict()
 
-def search_books(book_list, keyword):
-    search_results=[]
-    keyword=keyword.lower()
-    
-    for book in book_list:
-        if keyword in book.title.lower():
-            search_results.append(book)
-            continue
-        for author in book.authors:
-            if keyword in author.lower():
-                search_results.append(book)
-                break
-    
-    return search_results
+def search_books(books: list, keyword: str) -> list:
 
-def filter_books(book_list, genre:str=None, year:int=None):
-    filtered_book_list=[]
-    
-    for book in book_list:
-        genre_matches=False
-        year_matches=False
-        
-        if genre is None:
-            genre_matches=True    
-        elif genre.lower() in book.genre.lower():
-            genre_matches=True
-                                                             #checks both genre and year filters if there is any given.
-        if year is None:
-            year_matches=True    
-        elif year==book.year:
-            year_matches=True
-        
-        if year_matches and genre_matches:
-            filtered_book_list.append(book)
-    
-    return filtered_book_list
+    kw = keyword.lower()
 
-def update_book(book_list:list, isbn:str, update_data:dict):
-    book_to_be_updated=None
-    for book in book_list:
-        if isbn==book.isbn:
-            book_to_be_updated=book
-            break
-    if book_to_be_updated:
-        for attribute, value in update_data.items():
-            if hasattr(book_to_be_updated, attribute):
-                setattr(book_to_be_updated, attribute, value)
-        return book_to_be_updated.to_dict()
-    elif book_to_be_updated is None:
-        print("                                   ---Book Not Found---")
-           
-            
+    return [b for b in books if b.active and (kw in b.title.lower() or any(kw in a.lower() for a in b.authors))]
+
+
+
+def filter_books(books: list, genre: str = None, year: int = None) -> list:
+
+
+    results = [b for b in books if b.active]
+
+    if genre:
+
+        results = [b for b in results if b.genre.lower() == genre.lower()]
+
+    if year:
+
+        results = [b for b in results if b.year == int(year)]
+
+    return results
+
+def update_book(books: list, isbn: str, updates: dict) -> dict:
+    for b in books:
+        if b.isbn == isbn:
+            for key, val in updates.items():
+                if hasattr(b, key):
+                    setattr(b, key, val)
+            try:
+                b.year=int(b.year)
+                b.copies=int(b.copies)
+                b.copies_available=b.copies
+            except ValueError:
+                print("Year and/or Copy amount should be integers.")
+                print("Updating is interrupted.")
+                return None
+                
+            return b.to_dict()
+    return None
