@@ -9,7 +9,7 @@ What Do the Files Do?
 
 main.py: The program's entry point; all menus and screens are here.
 
-catalog.py: Handles adding, deleting, searching, and filtering books.
+catalog.py: Handles adding, updating, searching, and filtering books.
 
 patron.py: Member registration, login processes, and debt tracking are handled here.
 

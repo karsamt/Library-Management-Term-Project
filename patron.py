@@ -16,12 +16,13 @@ class Patron:
 
 def load_patrons(path: str) -> list:
     try:
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             return [Patron(**p) for p in json.load(f)]
-    except: return []
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
 def save_patrons(path: str, patrons: list) -> None:
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump([p.to_dict() for p in patrons], f, indent=4)
 
 def register_patron(patrons: list, patron_data: dict) -> dict:

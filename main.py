@@ -9,7 +9,27 @@ def librarian_menu(books, patrons, loans):
         print("1) Add Book\n2) Update Book\n3) Search/Filter\n4) Overdues\n5) Fines\n6) Back")
         choice = input("Choice: ")
 
-        if choice == "2":
+        if choice == "1":
+            isbn = input("ISBN: ")
+            title = input("Title: ")
+            authors_str = input("Authors (comma separated): ")
+            authors = [a.strip() for a in authors_str.split(",")]
+            year = input("Year: ")
+            genre = input("Genre: ")
+            copies = input("Total Copies: ")
+            book_data = {
+                "isbn": isbn,
+                "title": title,
+                "authors": authors,
+                "year": int(year),
+                "genre": genre,
+                "copies": int(copies),
+                "copies_available": int(copies)
+            }
+            catalog.add_book(books, book_data)
+            print("Book added!")
+
+        elif choice == "2":
             isbn = input("Enter ISBN to update: ")
             print("Enter new values (Leave blank to keep current):")
             updates = {
@@ -21,7 +41,10 @@ def librarian_menu(books, patrons, loans):
  
             actual_updates = {k: v for k, v in updates.items() if v}
             res = catalog.update_book(books, isbn, actual_updates)
-            print(f"Updated!\n{res}")
+            if res:
+                print(f"Updated!\n{res}")
+            else:
+                print("Book not found or update failed.")
 
         elif choice == "3":
             print("1) Keyword Search\n2) Genre/Year Filter")
@@ -34,6 +57,15 @@ def librarian_menu(books, patrons, loans):
                 y = input("Year (blank for all): ")
                 res = catalog.filter_books(books, genre=g if g else None, year=y if y else None)
                 for b in res: print(b)
+        
+        elif choice == "4":
+            today = datetime.now().strftime("%Y-%m-%d")
+            overdues = reports.overdue_report(loans, today)
+            if not overdues:
+                print("No overdue books.")
+            else:
+                for loan in overdues:
+                    print(f"Loan ID: {loan['loan_id']}, ISBN: {loan['isbn']}, Due: {loan['due_date']}")
         
         elif choice == "5":
             fines = reports.fines_summary(patrons)

@@ -30,6 +30,8 @@ def return_book(books: list, patrons: list, loans: list, loan_id: str, return_da
     book = next((b for b in books if b.isbn == loan['isbn']), None)
     patron = next((p for p in patrons if p.library_id == loan['library_id']), None)
 
+    if not book or not patron:
+        return {"error": "Book or patron not found"}
     
     due = datetime.strptime(loan['due_date'], "%Y-%m-%d")
     ret = datetime.strptime(return_date, "%Y-%m-%d")
@@ -42,24 +44,6 @@ def return_book(books: list, patrons: list, loans: list, loan_id: str, return_da
     book.copies_available += 1
     patron.borrowed_count -= 1
     return loan
-
-def overdue_report(loans: list, current_date: str) -> list:
-    today = datetime.strptime(current_date, "%Y-%m-%d")
-    overdues = []
-    for loan in loans:
-        if loan['status'] == "active":
-            due_date = datetime.strptime(loan['due_date'], "%Y-%m-%d")
-            if due_date < today:
-                overdues.append(loan)
-    return overdues
-
-def fines_summary(patrons: list) -> dict:
-    
-    summary = {}
-    for p in patrons:
-        if p.fines > 0:
-            summary[p.name] = p.fines
-    return summary
 
 def circulation_stats(loans: list, books: list) -> dict:
     stats = {}
