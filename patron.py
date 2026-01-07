@@ -1,7 +1,7 @@
 import json
 
 class Patron:
-    def __init__(self, library_id, name, email, password, contact_info="", borrowed_count=0, fines=0.0):
+    def __init__(self, library_id, name, email, password, contact_info="", borrowed_count=0, fines=0.0, limit=5):
         self.library_id = library_id
         self.name = name
         self.email = email
@@ -9,7 +9,7 @@ class Patron:
         self.contact_info = contact_info
         self.borrowed_count = borrowed_count
         self.fines = fines
-        self.limit = 5 
+        self.limit = limit 
 
     def to_dict(self):
         return self.__dict__
